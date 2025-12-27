@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -44,12 +45,12 @@ form {
 				</a> <a href="#view">
 					<button class="btn btn-outline-primary">View Student</button>
 				</a> <a href="/">
-					<button class="btn btn-outline-primary">Logout</button>
+					<button class="btn btn-outline-danger">Logout</button>
 				</a>
 			</div>
 		</nav>
 		<section class="vh-100 gradient-custom enroll mt-2" id="enroll">
-			<div class="container h-100">
+			<div class="container-fluid mt-5 h-100">
 				<div class="row justify-content-center h-100 w-75">
 					<div class="col-12 col-lg-9 col-xl-7">
 						<div class="card shadow-2-strong card-registration mt-0"
@@ -133,6 +134,8 @@ form {
 												<option value="FDJ-160">FDJ-160</option>
 												<option value="REG-160">REG-160</option>
 												<option value="FDJ-161">FDJ-161</option>
+												<option value="REG-198">REG-198</option>
+												<option value="FDJ-198">FDJ-198</option>
 												<option value="REG-161">REG-162</option>
 												<option value="FDJ-162">FDJ-162</option>
 												<option value="REG-162">REG-162</option>
@@ -142,7 +145,6 @@ form {
 												<option value="REG-164">REG-164</option>
 												<option value="FDJ-165">FDJ-165</option>
 												<option value="REG-165">REG-165</option>
-												<option value="FDJ-198" selected>FDJ-198</option>
 											</select> <label class="form-label select-label">Batch Number</label>
 										</div>
 									</div>
@@ -150,6 +152,9 @@ form {
 										<input class="btn btn-primary btn-lg" type="submit"
 											value="Submit" />
 									</div>
+									<br>
+									<marquee class="text-danger mb-3 fs-small "> ${error}
+									</marquee>
 								</form>
 							</div>
 						</div>
@@ -157,8 +162,79 @@ form {
 				</div>
 			</div>
 		</section>
-		<section class="view" style="height: 530px" id="view">
-			<h1>View Student</h1>
+
+
+		<section class="view" style="height: 100vh" id="view">
+			<h1 class="text-center">Student Details..!</h1>
+			<div class="text-center w-100">
+
+				<form action="search" class="w-100">
+					<select class="select form-control-sm border border-primary"
+						name="batchMode">
+						<option value="#" disabled>Select Batch Mode</option>
+						<option value="All">All</option>
+						<option value="Online">Online</option>
+						<option value="Offline">Offline</option>
+					</select>
+					<button class="btn btn-outline-primary mb-1">Search</button>
+				</form>
+				<marquee>
+					<h1 style="color: red;">${message}</h1>
+				</marquee>
+			</div>
+			<table class="table table-hover" style="font-size: small;">
+
+				<thead class="table-dark">
+
+					<tr>
+
+						<th>ID</th>
+						<th>FullName</th>
+						<th>Email</th>
+						<th>Course</th>
+						<th>Age</th>
+						<th>CollageName</th>
+						<th>FeesPaid</th>
+						<th>BatchMode</th>
+						<th>BatchNumber</th>
+						<th>Action</th>
+
+					</tr>
+				</thead>
+
+				<tbody>
+					<c:forEach items="${data}" var="s">
+
+						<tr>
+
+							<td>${s.studentID}</td>
+							<td>${s.studentFullName}</td>
+							<td>${s.studentEmail}</td>
+							<td>${s.studentCourse}</td>
+							<td>${s.studentAge}</td>
+							<td>${s.studentCollageName}</td>
+							<td>${s.feesPaid}</td>
+							<td>${s.batchMode}</td>
+							<td>${s.batchNumber}</td>
+							<td>
+
+								<div class="btn-group  btn-group-sm" role="group">
+									<a href="delete?id=${s.studentID}"><button
+											class="btn btn-outline-danger">Remove</button></a> <a
+										href="shift?batch=${s.batchMode}"><button
+											class="btn btn-outline-primary">Shift Batch</button></a> <a
+										href="pay?fees=${s.feesPaid}"><button
+											class="btn btn-outline-success">Pay Fees</button></a>
+								</div>
+							</td>
+						</tr>
+					</c:forEach>
+				</tbody>
+
+			</table>
+
+
+
 		</section>
 	</div>
 </body>
