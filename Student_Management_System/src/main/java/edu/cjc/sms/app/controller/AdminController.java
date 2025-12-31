@@ -26,7 +26,9 @@ public class AdminController {
 	@RequestMapping("/login")
 	public String onLogin(@RequestParam String username, @RequestParam String password, Model m) {
 		if (username.equals("admin") && password.equals("admin123")) {
-			List<Student> list = ssi.getAllData();
+			int pageno = 0;
+			int pagesize = 10;
+			List<Student> list = ssi.addPaging(pageno, pagesize);
 			m.addAttribute("data", list);
 			return "adminscreen";
 		} else {
@@ -40,15 +42,20 @@ public class AdminController {
 			Model m) {
 
 		boolean isexist = ssi.isexistByEmail(studentEmail);
+		
 		if (isexist) {
-
-			List<Student> list = ssi.getAllData();
+			int pageno = 0;
+			int pagesize = 10;
+			List<Student> list = ssi.addPaging(pageno, pagesize);
 			m.addAttribute("data", list);
 			m.addAttribute("error", studentEmail + " is already exist");
 			return "adminscreen";
 		} else {
 			ssi.saveStudentDetails(student);
-			List<Student> list = ssi.getAllData();
+			int pageno = 0;
+			int pagesize = 10;
+			List<Student> list = ssi.addPaging(pageno, pagesize);
+			m.addAttribute("success","Student Enroll Successfully");
 			m.addAttribute("data", list);
 			return "adminscreen";
 		}
@@ -58,30 +65,72 @@ public class AdminController {
 	public String deleteData(@RequestParam("id") int id, Model m) {
 
 		ssi.deleteData(id);
-		List<Student> list = ssi.getAllData();
+		int pageno = 0;
+		int pagesize = 10;
+		List<Student> list = ssi.addPaging(pageno, pagesize);
 		m.addAttribute("data", list);
 		return "adminscreen";
 	}
 
 	@RequestMapping("/search")
-	public String getDataBatchMode(@RequestParam("batchMode") String batchMode, Model m) {
-		List<Student> result = ssi.searchByBatchMode(batchMode);
+	public String getDataBatchMode(@RequestParam("batchMode") String batchMode,
+			@RequestParam("batchNumber") String batchNumber, Model m) {
+		List<Student> result = ssi.searchByBatchModeAndBatchNumber(batchMode, batchNumber);
 
 		if (result.size() > 0) {
 			m.addAttribute("data", result);
-
-		} 
-		if(batchMode.equals("All"))
-		{
-			List<Student> list = ssi.getAllData();
+		} else {
+			m.addAttribute("message", "Not found " + batchNumber + " " + batchMode);
+			int pageno = 0;
+			int pagesize = 10;
+			List<Student> list = ssi.addPaging(pageno, pagesize);
 			m.addAttribute("data", list);
 		}
-		
-//		else {
-//			m.addAttribute("message", "Not found " + batchMode);
-//			List<Student> list = ssi.getAllData();
-//			m.addAttribute("data", list);
-//		}
+		return "adminscreen";
+	}
+
+	@RequestMapping("/paging")
+	public String paging(int pageno, Model m) {
+		int pagesize = 10;
+		List<Student> list = ssi.addPaging(pageno, pagesize);
+		m.addAttribute("data", list);
+		return "adminscreen";
+	}
+
+	@RequestMapping("/pay")
+	public String onfees(@RequestParam("id") int id, Model m) {
+
+		Student stu = ssi.getSingleStudent(id);
+		m.addAttribute("stu", stu);
+		return "fees";
+	}
+
+	@RequestMapping("/payfees")
+	public String payfees(@RequestParam("studentID") int studentID, @RequestParam("amount") double amount, Model m) {
+		ssi.payFees(studentID, amount);
+		int pageno = 0;
+		int pagesize = 10;
+		List<Student> list = ssi.addPaging(pageno, pagesize);
+		m.addAttribute("data", list);
+		return "adminscreen";
+	}
+	
+	@RequestMapping("/edit")
+	public String edit(@RequestParam("id") int studentID,Model m)
+	{
+		Student stu = ssi.getSingleStudent(studentID);
+		m.addAttribute("stu",stu);
+		return "edit";
+	}
+	
+	@RequestMapping("update")
+	public String updated(@ModelAttribute Student s,Model m)
+	{
+		ssi.saveStudentDetails(s);
+		int pageno = 0;
+		int pagesize = 10;
+		List<Student> list = ssi.addPaging(pageno, pagesize);
+		m.addAttribute("data", list);
 		return "adminscreen";
 	}
 
