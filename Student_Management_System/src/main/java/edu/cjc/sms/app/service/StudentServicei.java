@@ -23,5 +23,7 @@ public interface StudentServicei {
 	public List<Student> searchByBatchModeAndBatchNumber(String batchMode, String batchNumber);
 
 	public void payFees(int studentID, double amount);
+
+	public void shiftBatch(int studentID, String batchMode);
 	
 }

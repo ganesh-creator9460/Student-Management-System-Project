@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import edu.cjc.sms.app.model.Student;
@@ -55,9 +56,10 @@ public class StudentServiceImple implements StudentServicei {
 	@Override
 	public List<Student> addPaging(int pageno, int pagesize) {
 		
-		Pageable of = PageRequest.of(pageno, pagesize);
+		Pageable of = PageRequest.of(pageno, pagesize,Sort.by("studentFullName").ascending());
 		
 		List<Student>list = sr.findAll(of).getContent();
+		
 		return list;
 	}
 
@@ -90,6 +92,23 @@ public class StudentServiceImple implements StudentServicei {
 		{
 			throw new ArithmeticException("Data is not Found");
 		}
+	}
+
+	@Override
+	public void shiftBatch(int studentID, String batchMode) {
+		
+		Optional<Student> op = sr.findById(studentID);
+		if(op.isPresent())
+		{
+			Student student = op.get();
+			student.setBatchMode(batchMode);
+			sr.save(student);
+		}
+		else
+		{
+			throw new ArithmeticException("Data is not Found");
+		}
+		
 	}
 	
 }

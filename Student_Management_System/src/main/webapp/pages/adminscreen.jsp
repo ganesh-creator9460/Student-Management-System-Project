@@ -211,7 +211,7 @@ a {
 
 			</div>
 
-			<table class="container table-bordered" style="font-size: small;">
+			<table class=" table table-hover table-bordered" style="font-size: small;">
 
 				<thead class="color-dark bg-white">
 					<tr>
@@ -244,12 +244,13 @@ a {
 							<td>${s.feesPaid}</td>
 							<td>${s.batchMode}</td>
 							<td>${s.batchNumber}</td>
+							
 							<td>
 
 								<div class="btn-group  btn-group-sm" role="group">
 									<a href="delete?id=${s.studentID}"><button
 											class="btn btn-outline-danger">Remove</button></a> <a
-										href="shift?batch=${s.batchMode}"><button
+										href="shift?id=${s.studentID}"><button
 											class="btn btn-outline-primary">Shift Batch</button></a> <a
 										href="pay?id=${s.studentID}"><button
 											class="btn btn-outline-success">Pay Fees</button></a> <a

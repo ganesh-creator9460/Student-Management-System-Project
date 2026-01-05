@@ -25,7 +25,8 @@ public class AdminController {
 
 	@RequestMapping("/login")
 	public String onLogin(@RequestParam String username, @RequestParam String password, Model m) {
-		if (username.equals("admin") && password.equals("admin123")) {
+		if (username.equals("admin") && password.equals("admin")) {
+			
 			int pageno = 0;
 			int pagesize = 10;
 			List<Student> list = ssi.addPaging(pageno, pagesize);
@@ -123,7 +124,7 @@ public class AdminController {
 		return "edit";
 	}
 	
-	@RequestMapping("update")
+	@RequestMapping("/update")
 	public String updated(@ModelAttribute Student s,Model m)
 	{
 		ssi.saveStudentDetails(s);
@@ -134,4 +135,22 @@ public class AdminController {
 		return "adminscreen";
 	}
 
+	@RequestMapping("/shift")
+	public String shift(@RequestParam("id") int id,Model m)
+	{
+		Student stu = ssi.getSingleStudent(id);
+		m.addAttribute("stu", stu);
+		return "shift";
+	}
+	
+	@RequestMapping("/shifted")
+	public String shifted(@RequestParam("studentID") int studentID,@RequestParam("batchMode") String batchMode,Model m)
+	{
+		ssi.shiftBatch(studentID,batchMode);
+		int pageno = 0;
+		int pagesize = 10;
+		List<Student> list = ssi.addPaging(pageno, pagesize);
+		m.addAttribute("data", list);
+		return "adminscreen";
+	}
 }
