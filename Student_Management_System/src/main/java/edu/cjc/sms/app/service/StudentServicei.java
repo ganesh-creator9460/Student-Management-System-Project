@@ -24,6 +24,6 @@ public interface StudentServicei {
 
 	public void payFees(int studentID, double amount);
 
-	public void shiftBatch(int studentID, String batchMode);
+	public void shiftBatch(int studentID, String batchMode, String batchNumber);
 	
 }

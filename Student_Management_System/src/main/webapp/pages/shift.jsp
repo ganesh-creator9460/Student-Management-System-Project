@@ -50,6 +50,12 @@
 							<th>Batch Mode</th>
 							<td>${stu.batchMode}</td>
 						</tr>
+						
+						<tr class="table-danger fs-6">
+						
+						<th>Batch Number</th>
+						<td>${stu.batchNumber}</td>
+						</tr>
 
 					</tbody>
 
@@ -65,6 +71,24 @@
 						<option value="#" selected disabled>Select Batch Mode</option>
 						<option value="Online">Online</option>
 						<option value="Offline">Offline</option>
+					</select>
+						<select class="select form-control-sm border border-primary"
+						name="batchNumber">
+						<option value="#" selected disabled>Select Batch Number</option>
+						<option value="FDJ-160">FDJ-160</option>
+						<option value="REG-160">REG-160</option>
+						<option value="FDJ-161">FDJ-161</option>
+						<option value="REG-198">REG-198</option>
+						<option value="FDJ-198">FDJ-198</option>
+						<option value="REG-161">REG-162</option>
+						<option value="FDJ-162">FDJ-162</option>
+						<option value="REG-162">REG-162</option>
+						<option value="FDJ-163">FDJ-163</option>
+						<option value="REG-163">REG-163</option>
+						<option value="FDJ-164">FDJ-164</option>
+						<option value="REG-164">REG-164</option>
+						<option value="FDJ-165">FDJ-165</option>
+						<option value="REG-165">REG-165</option>
 					</select>
 					</div>
 

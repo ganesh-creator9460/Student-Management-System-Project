@@ -144,9 +144,9 @@ public class AdminController {
 	}
 	
 	@RequestMapping("/shifted")
-	public String shifted(@RequestParam("studentID") int studentID,@RequestParam("batchMode") String batchMode,Model m)
+	public String shifted(@RequestParam("studentID") int studentID,@RequestParam("batchMode") String batchMode,@RequestParam("batchNumber") String batchNumber,Model m)
 	{
-		ssi.shiftBatch(studentID,batchMode);
+		ssi.shiftBatch(studentID,batchMode,batchNumber);
 		int pageno = 0;
 		int pagesize = 10;
 		List<Student> list = ssi.addPaging(pageno, pagesize);

@@ -95,13 +95,14 @@ public class StudentServiceImple implements StudentServicei {
 	}
 
 	@Override
-	public void shiftBatch(int studentID, String batchMode) {
+	public void shiftBatch(int studentID, String batchMode,String batchNumber) {
 		
 		Optional<Student> op = sr.findById(studentID);
 		if(op.isPresent())
 		{
 			Student student = op.get();
 			student.setBatchMode(batchMode);
+			student.setBatchNumber(batchNumber);
 			sr.save(student);
 		}
 		else
